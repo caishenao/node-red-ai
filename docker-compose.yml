@@ -1,0 +1,34 @@
+# node-red-ai — docker compose
+#
+# Usage:
+#   docker compose up -d            # start (build locally if image missing)
+#   docker compose logs -f          # follow logs
+#   docker compose down             # stop and remove containers (keeps the named volume)
+#   docker compose down -v          # also delete the data volume (wipes flows, AI config, skills)
+#
+# Persistence: ai-data is a named volume mapped to /data inside the container.
+# On the host it lives under Docker's storage root (e.g. /var/lib/docker/volumes/...).
+# To use a host directory instead, see the commented `bind` block below.
+
+services:
+  node-red-ai:
+    image: caishenao/node-red-ai:latest
+    container_name: node-red-ai
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "1880:1880"
+    volumes:
+      - ai-data:/data
+      # - ./userdir:/data    # bind-mount alternative: keep flows.json + ai-config.json on the host
+    environment:
+      - TZ=Asia/Shanghai
+      # - NODE_RED_CREDENTIAL_SECRET=change-me   # set this to make credentials portable across volumes
+    restart: unless-stopped
+    stop_grace_period: 30s
+    init: false                  # tini is already PID 1 inside the image
+
+volumes:
+  ai-data:
+    name: node-red-ai-data

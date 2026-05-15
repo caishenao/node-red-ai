@@ -102,6 +102,19 @@ docker run -d --name node-red-ai \
 
 健康检查内置：`HEALTHCHECK` 每 30s 探测 `http://127.0.0.1:1880/`，失败 3 次置为 unhealthy。
 
+#### docker compose
+
+仓库根目录还提供 `docker-compose.yml`，一行起停：
+
+```bash
+docker compose up -d        # 第一次会自动构建镜像
+docker compose logs -f      # 跟随日志
+docker compose down         # 停止（保留数据卷 node-red-ai-data）
+docker compose down -v      # 连同数据卷一起删除（清空 flows / AI 配置 / 技能）
+```
+
+如需把数据放到宿主机目录，把 `docker-compose.yml` 里 `volumes` 改成 `- ./userdir:/data`，并 `mkdir -p userdir && chown 1000:1000 userdir`（容器内是 UID 1000 的 `node` 用户）。
+
 ### 配置 AI 服务
 
 | 字段 | 示例 |

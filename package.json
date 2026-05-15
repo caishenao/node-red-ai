@@ -57,6 +57,7 @@
         "json-stringify-safe": "5.0.1",
         "jsonata": "2.0.6",
         "lodash.clonedeep": "^4.5.0",
+        "mammoth": "^1.12.0",
         "media-typer": "1.1.0",
         "memorystore": "1.6.7",
         "mime": "3.0.0",
@@ -74,6 +75,7 @@
         "passport": "0.7.0",
         "passport-http-bearer": "1.0.1",
         "passport-oauth2-client-password": "0.1.2",
+        "pdf-parse": "^1.1.1",
         "raw-body": "3.0.0",
         "rfdc": "1.4.1",
         "semver": "7.7.4",
@@ -82,6 +84,7 @@
         "uglify-js": "3.19.3",
         "validate-npm-package-name": "7.0.2",
         "ws": "7.5.10",
+        "xlsx": "^0.18.5",
         "xml2js": "0.6.2"
     },
     "optionalDependencies": {

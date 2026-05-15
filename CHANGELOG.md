@@ -1,3 +1,24 @@
+#### 4.1.10-ai.3: AI File Upload & Flow Auto-Approve
+
+ - Add server-side document parsing for PDF, Word (.docx), Excel (.xlsx/.xls) via registry pattern
+ - Increase AI file upload limit from 200KB to 200MB with multipart upload endpoint
+ - Fix Chinese filename garbling in uploaded files (busboy latin1 → utf8 re-encoding)
+ - Auto-approve add_nodes / wire_nodes / add_subflow when canvas is empty (skip per-node approval)
+ - Add FILE_TYPE_CONFIG registry for client-side file extension → icon mapping
+
+#### 4.1.10-ai.2: AI Skills & Tap Nodes
+
+ - Add tap_nodes tool for live message sampling from debug nodes
+ - Add skill management (install, toggle, delete) with markdown editor
+ - Add clear-config action to wipe stored AI credentials
+
+#### 4.1.10-ai.1: AI Assistant Sidebar
+
+ - Add AI chat sidebar with streaming responses
+ - Add agent mode with tool-calling (read/write flow, palette, context)
+ - Add protocol parsing and subflow generation endpoints
+ - Add file attachment support (text files)
+
 #### 4.1.10: Maintenance Release
 
  - Ensure project files are inside project root path (#5724) @knolleary

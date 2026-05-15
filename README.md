@@ -82,6 +82,26 @@ node packages/node_modules/node-red/red.js --userDir .userdir --port 1880
 
 打开 `http://127.0.0.1:1880`，在右侧栏切换到「AI」标签，点齿轮图标配置 API Key，开始对话。
 
+### Docker 运行
+
+仓库根目录提供了完整的 fork 自构建 `Dockerfile`（多阶段：builder 跑 `npm install + grunt build`，runtime 仅保留运行时产物）。镜像大小约 660MB。
+
+```bash
+# 构建
+docker build -t node-red-ai:latest .
+
+# 运行（持久化数据到命名卷 ai-data）
+docker volume create ai-data
+docker run -d --name node-red-ai \
+  -p 1880:1880 \
+  -v ai-data:/data \
+  node-red-ai:latest
+```
+
+数据目录 `/data` 与上游 `nodered/node-red` 镜像保持一致：`flows.json`、`ai-config.json`（AES-GCM 加密的 API Key）、`ai-skills/` 都落在该卷里，重启不丢。容器以非 root 用户 `node` (UID 1000) 运行，并使用 `tini` 做 PID 1 处理 SIGTERM。
+
+健康检查内置：`HEALTHCHECK` 每 30s 探测 `http://127.0.0.1:1880/`，失败 3 次置为 unhealthy。
+
 ### 配置 AI 服务
 
 | 字段 | 示例 |

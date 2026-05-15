@@ -1,0 +1,46 @@
+# Build artifacts and local state — must not be sent to Docker daemon.
+node_modules
+**/node_modules
+# Re-include the source tree (Node-RED uses packages/node_modules/* as its monorepo layout).
+!packages/node_modules
+!packages/node_modules/**
+packages/node_modules/@node-red/editor-client/public
+.dist
+coverage
+.nyc_output
+.tmp-userdir
+.userdir
+.claude
+
+# Local editor / OS junk
+.DS_Store
+.vscode
+.editorconfig
+.tern-project
+.i18n-editor-metadata
+.project
+.settings
+
+# Git history / CI / docs we don't need at build time
+.git
+.gitignore
+.github
+docs
+
+# Test fixtures (keep test/ for unit tests if you want; flip if image needs to stay tiny)
+test
+
+# Local user data and credentials — must NEVER end up in image layers
+*.backup
+*.bak
+*_cred*
+.config.json
+.sessions.json
+credentials.json
+flows*.json
+ai-config.json
+ai-skills
+
+# Docker-related (avoid recursive copy)
+Dockerfile
+.dockerignore

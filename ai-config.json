@@ -1,0 +1,6 @@
+{
+  "provider": "openai",
+  "baseUrl": "https://aicodelink.top",
+  "model": "gpt-5.5",
+  "apiKey": "v1:gZwi9Yckaa8SoZkS:S6Ap3VCEzcI8xPtC6SBUqw==:fATGujOrYLEhFW42m+EmLCnF/xAqJ3/WQRcSWFVFTplI+NuvREo8DEwVJwhuZXIvYUzb"
+}

@@ -1,0 +1,23 @@
+{
+    "version": "1.0.0",
+    "policies": [
+        {
+            "name": "code-review",
+            "path": ".claude/policies/code-review.json",
+            "description": "Automated code review with complexity analysis",
+            "enabled": true
+        },
+        {
+            "name": "security-review",
+            "path": ".claude/policies/security-review.json",
+            "description": "Security vulnerability scanning for code changes",
+            "enabled": true
+        },
+        {
+            "name": "frontend-design",
+            "path": ".claude/policies/frontend-design.json",
+            "description": "UI component design review standards",
+            "enabled": false
+        }
+    ]
+}

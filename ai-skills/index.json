@@ -1,0 +1,14 @@
+{
+  "skills": [
+    {
+      "id": "superpower",
+      "name": "superpower",
+      "description": "Node-RED IoT 接入与画布编排专家心法 —— 协议解析、节点选择、子流程组装与调试的标准流程。",
+      "enabled": true,
+      "sourceUrl": "builtin:superpower",
+      "installedAt": "2026-05-15T07:41:21.525Z",
+      "bytes": 2714,
+      "builtinName": "superpower"
+    }
+  ]
+}

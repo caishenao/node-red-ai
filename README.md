@@ -84,18 +84,30 @@ node packages/node_modules/node-red/red.js --userDir .userdir --port 1880
 
 ### Docker 运行
 
-仓库根目录提供了完整的 fork 自构建 `Dockerfile`（多阶段：builder 跑 `npm install + grunt build`，runtime 仅保留运行时产物）。镜像大小约 660MB。
+#### 快速启动（推荐）
+
+镜像已发布到 Docker Hub：`caishenao11/node-red-ai:latest`。直接拉取并启动：
 
 ```bash
-# 构建
-docker build -t node-red-ai:latest .
+docker pull caishenao11/node-red-ai:latest
+docker volume create node-red-ai-data
 
-# 运行（持久化数据到命名卷 ai-data）
-docker volume create ai-data
 docker run -d --name node-red-ai \
+  --restart unless-stopped \
   -p 1880:1880 \
-  -v ai-data:/data \
-  node-red-ai:latest
+  -v node-red-ai-data:/data \
+  caishenao11/node-red-ai:latest
+```
+
+启动后打开 `http://127.0.0.1:1880`，在右侧栏切换到「AI」标签，点齿轮图标配置 API Key。
+
+常用维护命令：
+
+```bash
+docker logs -f node-red-ai       # 查看日志
+docker restart node-red-ai       # 重启服务
+docker rm -f node-red-ai         # 删除容器（保留数据卷）
+docker volume rm node-red-ai-data # 如需清空 flows / AI 配置 / 技能，再删除数据卷
 ```
 
 数据目录 `/data` 与上游 `nodered/node-red` 镜像保持一致：`flows.json`、`ai-config.json`（AES-GCM 加密的 API Key）、`ai-skills/` 都落在该卷里，重启不丢。容器以非 root 用户 `node` (UID 1000) 运行，并使用 `tini` 做 PID 1 处理 SIGTERM。
@@ -107,13 +119,21 @@ docker run -d --name node-red-ai \
 仓库根目录还提供 `docker-compose.yml`，一行起停：
 
 ```bash
-docker compose up -d        # 第一次会自动构建镜像
+docker compose up -d        # 第一次会自动拉取 caishenao11/node-red-ai:latest
 docker compose logs -f      # 跟随日志
 docker compose down         # 停止（保留数据卷 node-red-ai-data）
 docker compose down -v      # 连同数据卷一起删除（清空 flows / AI 配置 / 技能）
 ```
 
 如需把数据放到宿主机目录，把 `docker-compose.yml` 里 `volumes` 改成 `- ./userdir:/data`，并 `mkdir -p userdir && chown 1000:1000 userdir`（容器内是 UID 1000 的 `node` 用户）。
+
+#### 本地构建（可选）
+
+仓库根目录提供了完整的 fork 自构建 `Dockerfile`（多阶段：builder 跑 `npm install + grunt build`，runtime 仅保留运行时产物）。需要从当前源码重新构建时：
+
+```bash
+docker build -t caishenao11/node-red-ai:latest .
+```
 
 ### 配置 AI 服务
 

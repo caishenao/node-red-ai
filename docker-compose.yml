@@ -1,7 +1,7 @@
 # node-red-ai — docker compose
 #
 # Usage:
-#   docker compose up -d            # start (build locally if image missing)
+#   docker compose up -d            # start (pull image if missing)
 #   docker compose logs -f          # follow logs
 #   docker compose down             # stop and remove containers (keeps the named volume)
 #   docker compose down -v          # also delete the data volume (wipes flows, AI config, skills)
@@ -12,11 +12,8 @@
 
 services:
   node-red-ai:
-    image: caishenao/node-red-ai:latest
+    image: caishenao11/node-red-ai:latest
     container_name: node-red-ai
-    build:
-      context: .
-      dockerfile: Dockerfile
     ports:
       - "1880:1880"
     volumes:
